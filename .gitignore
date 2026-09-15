@@ -1,6 +1,7 @@
 # Local datasets and generated experiments
 *.h5
 *.hdf5
+*.h5ad
 outputs/
 prepared_data/
 *.log

@@ -30,7 +30,7 @@ def main():
         parser.error('--folds must contain distinct nonnegative fold indices.')
     data_dir = args.data_dir.resolve()
     output_dir = args.output_dir.resolve()
-    script = Path(__file__).resolve().with_name('train-tissue.py')
+    script = Path(__file__).resolve().parent / 'model' / 'train-tissue.py'
     commands = []
     for fold in args.folds:
         fold_dir = data_dir / 'cv_folds' / f'fold_{fold}'
@@ -50,6 +50,7 @@ def main():
         commands.append((destination, command))
     env = os.environ.copy()
     env.setdefault('XLA_PYTHON_CLIENT_MEM_FRACTION', '0.20')
+    env['PYTHONIOENCODING'] = 'utf-8'
     for destination, command in commands:
         print(json.dumps(command, ensure_ascii=False), flush=True)
         if args.dry_run:

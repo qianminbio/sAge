@@ -114,9 +114,12 @@ def valid_step(state, x, cfg, lab):
 
 
 def update_early_stopping(early_stopper_instance, metric_value):
-    temp_has_improved, temp_new_early_state = early_stopper_instance.update(metric_value)
-
-    return temp_new_early_state, temp_has_improved
+    """Support both the historical and current Flax return conventions."""
+    updated = early_stopper_instance.update(metric_value)
+    if isinstance(updated, tuple):
+        has_improved, state = updated
+        return state, has_improved
+    return updated, updated.has_improved
 
 
 if __name__ == "__main__":
