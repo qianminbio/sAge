@@ -1,9 +1,15 @@
-# ==============================================================================
-# 终极主刊定稿版：单细胞特征“基因 vs 通路”双景对比热图
-# 特性：110x110mm 绝对定标、6pt 组织名、5pt 黑色数字、完全去除白边框 (无缝热图)
+# Compare gene-set Jaccard and GO semantic similarity across mouse tissues.
+# Run this script from the repository root; configure paths in figure/paths.R.
+# Required external inputs are listed in figure/INPUTS.md.
+
+source("figure/paths.R")
+
 # ==============================================================================
 
-graphics.off() # 强杀所有残留画板，释放文件占用
+
+# ==============================================================================
+
+graphics.off()
 
 if (!requireNamespace("pheatmap", quietly = TRUE)) install.packages("pheatmap")
 if (!requireNamespace("proxy", quietly = TRUE)) install.packages("proxy")
@@ -22,20 +28,20 @@ library(grid)
 
 
 
-final_output_dir <- "E:/2-8.3-shanda/1-feature/1-figure/0-1-result-2-mouse-gene/4-GO-upset-jaccard"
+final_output_dir <- figure_output("2-8.3-shanda/1-feature/1-figure/0-1-result-2-mouse-gene/4-GO-upset-jaccard")
 if (!dir.exists(final_output_dir)) dir.create(final_output_dir, recursive = TRUE)
 
-# --- 🎨 核心视觉标尺 ---
+
 pub_colors <- colorRampPalette(c("#FFFFFF", "#FFF7BC", "#FC8D59", "#E31A1C", "#800026"))(100)
 pub_breaks <- seq(0, 1, length.out = 101)
 
-# 🌟 核心修改 1：将边框颜色设置为 NA，彻底去掉热图中的白框
+
 grid_border_color <- NA
 
 leg_breaks <- seq(0, 1, by = 0.2)
 leg_labels <- c("0.0", "0.2", "0.4", "0.6", "0.8", "1.0")
 
-# --- 🔧 初始化引擎 ---
+
 message(">>> [Init] 正在初始化 GO 语义拓扑数据库 (GOSemSim)...")
 mmGO <- godata('org.Mm.eg.db', ont="BP", computeIC=FALSE)
 hsGO <- godata('org.Hs.eg.db', ont="BP", computeIC=FALSE)
@@ -58,9 +64,9 @@ run_go_enrichment <- function(entrez_ids, org_db) {
 }
 
 # ==============================================================================
-# --- 🐁 模块 1：小鼠数据全景分析 (Mouse) ---
+
 # ==============================================================================
-input_dir_mouse <- "E:/2-8.3-shanda/1-feature/9-Final_Segmented_Genes"
+input_dir_mouse <- figure_input("2-8.3-shanda/1-feature/9-Final_Segmented_Genes")
 
 if (dir.exists(input_dir_mouse)) {
   message("\n========================================================")
@@ -115,22 +121,22 @@ if (dir.exists(input_dir_mouse)) {
     master_dist_m <- as.dist(1 - sim_m_p)
     master_tree_m <- hclust(master_dist_m, method = "ward.D2")
 
-    # 🌟 严格锁定 110mm 画板
+
     p_width <- 90 / 25.4
     p_height <- 80 / 25.4
 
     message("  -> 正在渲染小鼠图谱...")
 
-    # ---------------- 绘制小鼠 Pathway 图 ----------------
+
     out_pathway_m <- file.path(final_output_dir, "Fig1B_Mouse_Pathway_Semantic.pdf")
     pdf(out_pathway_m, width = p_width, height = p_height, family = "Helvetica", useDingbats = FALSE)
     pheatmap::pheatmap(sim_m_p, color = pub_colors, breaks = pub_breaks,
-                       display_numbers = FALSE, # 🌟 恢复纯黑色数字展示所有两位小数
+                       display_numbers = FALSE,
                        fontsize_number = 5,
                        fontsize = 6, fontsize_row = 6, fontsize_col = 6,
                        treeheight_row = 15, treeheight_col = 15,
                        cluster_rows = master_tree_m, cluster_cols = master_tree_m,
-                       border_color = grid_border_color, # 🌟 这里此时等于 NA，边框消失
+                       border_color = grid_border_color,
                        main = "", angle_col = "45",
                        legend_breaks = leg_breaks, legend_labels = leg_labels)
 
@@ -140,7 +146,7 @@ if (dir.exists(input_dir_mouse)) {
                     gp = grid::gpar(fontsize = 6, fontfamily = "Helvetica"))
     dev.off()
 
-    # ---------------- 绘制小鼠 Gene 图 ----------------
+
     out_gene_m <- file.path(final_output_dir, "Fig1A_Mouse_Gene_Jaccard.pdf")
     pdf(out_gene_m, width = p_width, height = p_height, family = "Helvetica", useDingbats = FALSE)
     pheatmap::pheatmap(sim_m_g, color = pub_colors, breaks = pub_breaks,

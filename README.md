@@ -280,8 +280,9 @@ outputs are excluded from Git; the complete Heart reviewer file is included.
 
 The `figure/` directory contains the manuscript analysis notebooks and R scripts.
 These require additional dependencies and external input/results files. Start
-with [figure/README.md](figure/README.md) for the script index, installation,
-and missing-input notes. The model environment alone does not install all
+with [figure/README.md](figure/README.md) for the organized script index,
+installation, input inventory, and validation scope. The model environment
+alone does not install all
 figure dependencies.
 
 ## Repository layout

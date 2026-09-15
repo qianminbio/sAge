@@ -5,6 +5,8 @@
 *.h5ad
 outputs/
 prepared_data/
+figure_inputs/
+figure_outputs/
 *.log
 
 # Python and local environments

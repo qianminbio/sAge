@@ -24,7 +24,8 @@
 - [x] Include the complete Heart reviewer example via Git LFS.
 - [ ] Confirm Heart data provenance, gene order, label mappings, and public redistribution rights.
 - [ ] Inventory and release the actual training/evaluation code for every central benchmark result.
-- [ ] Supply the missing cellphonedb_interaction_count_network helper and figure input manifest.
+- [x] Supply the CellPhoneDB helper and figure input-path inventory.
+- [ ] Add dataset accessions, checksums, and access routes for the missing figure inputs.
 - [ ] Validate the figure notebooks/R scripts and record their final dependency versions.
 
 ## GitHub handoff

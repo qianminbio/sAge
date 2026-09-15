@@ -1,11 +1,17 @@
+# Plot multi-tissue GO enrichment results.
+# Run this script from the repository root; configure paths in figure/paths.R.
+# Required external inputs are listed in figure/INPUTS.md.
+
+source("figure/paths.R")
+
 # ==============================================================================
-# 主刊级别跨组织瀑布流气泡图 v9.1 纯净版
-# 修复：去除图例色条(Colorbar)的黑色边框，使其更轻盈
+
+
 # ==============================================================================
 
 graphics.off()
 
-# 1. 加载依赖包
+
 library(dplyr)
 library(readr)
 library(tidyr)
@@ -15,14 +21,14 @@ library(forcats)
 library(scales)
 library(stats)
 
-# 2. 配置路径
-input_dir        <- "E:/2-8.3-shanda/1-feature/11-1-Enrichment_R_Results"
-final_output_dir <- "E:/2-8.3-shanda/1-feature/1-figure/4-GO-MultiTissue"
+
+input_dir        <- figure_input("2-8.3-shanda/1-feature/11-1-Enrichment_R_Results")
+final_output_dir <- figure_output("2-8.3-shanda/1-feature/1-figure/4-GO-MultiTissue")
 if (!dir.exists(final_output_dir)) dir.create(final_output_dir, recursive = TRUE)
 output_pdf <- file.path(final_output_dir, "1.3-Figure_Waterfall_DotPlot_NatureFinal_v9.1.pdf")
 
 # ==============================================================================
-# 🔧 修复函数 1：生物学术语大小写标准化
+
 # ==============================================================================
 fix_bio_terms <- function(x) {
   x <- str_to_sentence(x)
@@ -34,7 +40,7 @@ fix_bio_terms <- function(x) {
 }
 
 # ==============================================================================
-# 🔧 修复函数 2：组织名首字母统一大写
+
 # ==============================================================================
 fix_tissue_names <- function(x) {
   x <- str_replace_all(x, "_", " ")
@@ -43,7 +49,7 @@ fix_tissue_names <- function(x) {
   return(x)
 }
 
-# 3. 读取并预处理数据
+
 message(">>> 正在整合跨组织富集数据...")
 csv_files <- list.files(input_dir, pattern = "_GO_BP_Table\\.csv$", full.names = TRUE)
 
@@ -59,7 +65,7 @@ all_go_data <- lapply(csv_files, function(file) {
   return(NULL)
 }) %>% bind_rows()
 
-# 4. 严苛提取通路
+
 shared_pathways <- all_go_data %>%
   filter(p.adjust < 0.01) %>%
   group_by(Description) %>%
@@ -79,7 +85,7 @@ plot_df <- all_go_data %>% filter(Description %in% target_pathways)
 plot_df$Description_Clean <- fix_bio_terms(plot_df$Description) %>%
   str_wrap(width = 40)
 
-# 5. 核心排序
+
 message(">>> 正在执行瀑布流截断与组织聚类算法...")
 
 pathway_rank <- plot_df %>%
@@ -91,7 +97,7 @@ top_20_pathways <- head(pathway_rank$Description_Clean, 20)
 plot_df <- plot_df %>% filter(Description_Clean %in% top_20_pathways)
 plot_df$Description_Clean <- factor(plot_df$Description_Clean, levels = rev(top_20_pathways))
 
-# 层次聚类 X 轴
+
 wide_mat <- plot_df %>%
   dplyr::select(Tissue, Description_Clean, LogP) %>%
   pivot_wider(names_from = Tissue, values_from = LogP, values_fill = list(LogP = 0)) %>%
@@ -103,12 +109,12 @@ hc                <- hclust(dist(t(wide_mat)), method = "ward.D2")
 clustered_tissues <- colnames(wide_mat)[hc$order]
 plot_df$Tissue    <- factor(plot_df$Tissue, levels = clustered_tissues)
 
-# 封顶极值
+
 cap_value           <- 8
 plot_df$LogP_Capped <- pmin(plot_df$LogP, cap_value)
 
 # ==============================================================================
-# 6. 视觉渲染 (无黑边色条版)
+
 # ==============================================================================
 pub_color_scale <- c("#FEEDDE", "#FDAE6B", "#E31A1C", "#800026")
 
@@ -138,7 +144,7 @@ p <- ggplot(plot_df, aes(x = Tissue, y = Description_Clean)) +
       barwidth  = unit(0.35, "cm"),
       barheight = unit(2.2, "cm"),
       ticks.linewidth = 0.4,
-      frame.colour = NA  # ✅ 绝杀：将 "black" 改为 NA，彻底去掉色条黑边
+      frame.colour = NA
     )
   ) +
 
@@ -175,7 +181,7 @@ p <- ggplot(plot_df, aes(x = Tissue, y = Description_Clean)) +
     plot.margin = margin(t = 2, r = 2, b = 2, l = 2, unit = "mm")
   )
 
-# 导出 PDF
+
 cairo_pdf(output_pdf, width = p_width, height = p_height, family = "Helvetica", onefile = FALSE)
 print(p)
 dev.off()
