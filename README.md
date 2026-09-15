@@ -206,7 +206,8 @@ python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outpu
 
 Pruning depends on validation improvements, so the exact epoch and retained
 feature count can vary. The [reviewer run record](docs/reviewer-validation.md)
-shows an observed run and how its checkpoint was checked.
+shows both this short check and a complete fold 0 run that reached single-digit
+features. Use the full run below to observe the training stop condition.
 
 ### Run all five folds
 

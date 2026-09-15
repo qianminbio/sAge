@@ -37,8 +37,9 @@ environment check. Reviewer training uses the complete `data/Heart.hdf5`.
 
 A separate [fresh-clone reviewer run](reviewer-validation.md) subsequently
 verified complete Heart download, independent Conda and pip installations,
-five-fold preparation, fold 0 training, actual iterative pruning, and checkpoint
-restore. Not verified: a complete five-fold/early-stopped training run,
+five-fold preparation, fold 0 training through natural early stopping, actual
+iterative pruning to one retained feature, and checkpoint restore. Not verified:
+a complete five-fold training run,
 Linux/GPU execution, manuscript result equivalence, or figure/R execution.
 The optional figure requirements are not a validated version lock.
 

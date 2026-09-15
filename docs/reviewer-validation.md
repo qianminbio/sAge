@@ -46,11 +46,23 @@ This verifies the small-sample concern: the demonstration uses the complete
 Heart file, and pruning was observed in an actual training run. A one-epoch
 check alone is too short to exercise pruning.
 
+After the eight-epoch check, an independent fold 0 run used the README's full
+training setting `--max_epochs 9999` and the default early-stopping rule. It
+actually reached nine retained features at epoch 163, then one at epoch 171.
+Early stopping ended the run at epoch 234, and final holdout evaluation
+completed. Checkpoints were saved for feature counts 9 through 2. No
+one-feature checkpoint was saved because the validation score after that
+pruning step fell below the code's initialized 80% save threshold. The final
+test used the last one-feature training state, not a restored checkpoint.
+
+The eight-epoch 20,686-feature count was only an intermediate observation.
+With the complete Heart file, the code did continue pruning to single digits.
+
 ## Limits
 
-The eight-epoch run used only fold 0. It does not establish the scores from a
-full five-fold or early-stopped training run, manuscript numerical equivalence,
-or GPU/Linux execution. The one-fold accuracy is an execution diagnostic and
-must not be presented as a paper result. The PyTorch loader shuffle is not
-explicitly seeded, so scores can vary across runs. Figure analysis and the
-full benchmark suite have separate inputs and were not executed in this audit.
+The long run used only fold 0. It does not establish the scores from all five
+folds, manuscript numerical equivalence, or GPU/Linux execution. Its accuracy
+is an execution diagnostic and must not be presented as a paper result. The
+PyTorch loader shuffle is not explicitly seeded, so scores and exact pruning
+epochs can vary across runs. Figure analysis and the full benchmark suite have
+separate inputs and were not executed in this audit.
