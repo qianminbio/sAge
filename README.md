@@ -3,7 +3,7 @@
 Research code for **sAge**, implemented as `MaskedPruningModel` in JAX/Flax, with
 masked feature augmentation and iterative feature selection.
 
-Repository: https://github.com/qm713152/SAGE
+Repository: https://github.com/qm713152/sAge
 
 **Release status:** repository preparation in progress. The manuscript title,
 authors, data accession, license, and a validated software environment must

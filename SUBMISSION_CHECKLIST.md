@@ -23,12 +23,12 @@
 ## GitHub handoff
 
 - [x] Confirm that the submission does not require anonymity.
-- [x] Specify the public GitHub repository: https://github.com/qm713152/SAGE.
+- [x] Specify the public GitHub repository: https://github.com/qm713152/sAge.
 - [ ] Select a license with the code owners and review third-party attribution.
 - [ ] Replace the historical environment's local prefix when producing the release environment.
 - [ ] Review the explicit file list before committing; datasets and outputs are ignored.
 - [ ] Complete the README release metadata and remove resolved preparation notes.
 - [ ] Tag the exact version used for submission and include that link in the manuscript.
 
-Repository: https://github.com/qm713152/SAGE. Manuscript release readiness
+Repository: https://github.com/qm713152/sAge. Manuscript release readiness
 depends on the unchecked scientific and reproduction items above.
