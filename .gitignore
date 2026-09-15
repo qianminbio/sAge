@@ -1,0 +1,23 @@
+# Local datasets and generated experiments
+*.h5
+*.hdf5
+outputs/
+prepared_data/
+*.log
+
+# Python and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Local configuration
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

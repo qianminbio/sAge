@@ -1,0 +1,13 @@
+# Direct dependencies only; this is not a validated version lock.
+# See environment.yml for the historical environment and README.md for caveats.
+numpy
+scipy
+h5py
+scikit-learn
+torch
+jax
+jaxlib
+flax
+optax
+orbax-checkpoint
+tqdm
