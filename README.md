@@ -12,12 +12,17 @@ train/test and cross-validation splits → train → inspect logs and selected f
 Install Git and Miniconda (or Anaconda), then run:
 
 ```bash
+git lfs install
 git clone https://github.com/qm713152/sAge.git
 cd sAge
+git lfs pull
 ```
 
 Run the commands below from this repository directory. In Windows, use
 **Anaconda Prompt** for the Conda commands.
+Git LFS downloads the complete Heart example (approximately 285 MB). If you
+only need the small reviewer subset, a regular clone obtains that file even
+without LFS. See [the example-data guide](data/README.md).
 
 ## 2. Install the environment
 
@@ -103,9 +108,12 @@ JAX cannot see a GPU, so CPU fallback is not mistaken for GPU execution.
 
 ## 3. Prepare your input data
 
-The repository does **not** include the input dataset or a public download
-link yet. Obtain the preprocessed data from the authors and place
-`Heart.hdf5` in the repository directory, or substitute your own file path.
+The repository provides `data/Heart.hdf5` via Git LFS and a smaller
+`data/Heart-reviewer-demo.h5` as a regular Git file. The small subset has
+120 biological cells (60 from each of the two present classes) and is intended
+for a quick reviewer execution check. For the full file's schema, checksum,
+and download instructions, read [data/README.md](data/README.md).
+Substitute another HDF5 path when using your own preprocessed dataset.
 
 Each HDF5 file must contain:
 
@@ -124,13 +132,14 @@ For this implementation:
   then applies `log2(x * 1023 + 1)`. Use the input preprocessing intended for
   the experiment; do not apply this transform twice.
 
-The biological class names, covariate meaning, gene order, and data accession
-still need author documentation.
+The current Heart file contains only class IDs 1 and 4, although the model has
+six output classes. The biological class names, covariate meaning, gene order,
+data accession, and redistribution rights still need author documentation.
 
 Create a holdout test set and five cross-validation folds:
 
 ```bash
-python model/prepare_dataset_for_cv.py --data_path Heart.hdf5 --output_dir prepared_data/Heart --initial_test_size_ratio 0.2 --n_cv_splits 5 --random_state 42
+python model/prepare_dataset_for_cv.py --data_path data/Heart.hdf5 --output_dir prepared_data/Heart --initial_test_size_ratio 0.2 --n_cv_splits 5 --random_state 42
 ```
 
 Expected layout:
@@ -164,6 +173,17 @@ python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outpu
 
 This checks that the files exist and prints commands. It does not load the
 HDF5 contents or train the model.
+
+For a short reviewer run using biological rows, start with the included
+subset; this avoids a long run on the 3,104-cell full file:
+
+```bash
+python model/prepare_dataset_for_cv.py --data_path data/Heart-reviewer-demo.h5 --output_dir prepared_data/Heart-reviewer-demo
+python run_cross_validation.py --data-dir prepared_data/Heart-reviewer-demo --output-dir outputs/Heart-reviewer-demo --folds 0 -- --numhead 1 --batchsize 8 --batchrepeat 1 --max_epochs 1
+```
+
+Read `outputs/Heart-reviewer-demo/fold_0/train.log`. This command checks
+execution and uses reduced settings; its scores are not manuscript results.
 
 ### Run a short check on one fold
 
@@ -223,8 +243,8 @@ outputs/Heart/fold_0/
   validation improvements. Checkpoints are not guaranteed after a short run:
   the existing training code initializes the accuracy threshold at 80%.
 
-The remaining folds have the same structure. Data files and generated outputs
-are excluded from Git.
+The remaining folds have the same structure. Prepared splits and generated
+outputs are excluded from Git; the two Heart example files are included.
 
 ## Troubleshooting
 
@@ -267,3 +287,8 @@ data-splitting behavior, random seeds, checkpoint selection, and metric
 aggregation. The manuscript title, author list, citation, data accession,
 and license are pending. See [the submission checklist](SUBMISSION_CHECKLIST.md)
 for the remaining release items.
+
+The available MLP benchmark notebooks are indexed in
+[benchmark/README.md](benchmark/README.md). The manuscript's full benchmark
+model list and the scripts/settings behind every reported comparison still
+need author review before claiming that all benchmark results are reproducible.

@@ -7,3 +7,4 @@
 *.txt text eol=lf
 *.R text eol=lf
 *.ipynb text eol=lf
+data/Heart.hdf5 filter=lfs diff=lfs merge=lfs -text

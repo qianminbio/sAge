@@ -21,6 +21,9 @@
 - [ ] Reproduce the manuscript experiments and preserve logs/configurations.
 - [ ] Document hardware and expected runtime based on actual runs.
 - [ ] Provide data and any released weights separately with checksums.
+- [x] Include the complete Heart reviewer example via Git LFS and a regular-Git quick subset.
+- [ ] Confirm Heart data provenance, gene order, label mappings, and public redistribution rights.
+- [ ] Inventory and release the actual training/evaluation code for every central benchmark result.
 - [ ] Supply the missing cellphonedb_interaction_count_network helper and figure input manifest.
 - [ ] Validate the figure notebooks/R scripts and record their final dependency versions.
 

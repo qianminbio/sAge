@@ -1,6 +1,8 @@
 # Local datasets and generated experiments
 *.h5
 *.hdf5
+!data/Heart.hdf5
+!data/Heart-reviewer-demo.h5
 *.h5ad
 outputs/
 prepared_data/
