@@ -308,7 +308,8 @@ aggregation. The manuscript title, author list, citation, data accession,
 and license are pending. See [the submission checklist](SUBMISSION_CHECKLIST.md)
 for the remaining release items.
 
-The available MLP benchmark notebooks are indexed in
-[benchmark/README.md](benchmark/README.md). The manuscript's full benchmark
+The available MLP benchmark notebooks are in
+[Figure 2](figure/figure2/), with required inputs listed in
+[the figure input inventory](figure/INPUTS.md). The manuscript's full benchmark
 model list and the scripts/settings behind every reported comparison still
 need author review before claiming that all benchmark results are reproducible.
