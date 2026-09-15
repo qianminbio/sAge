@@ -32,8 +32,8 @@ On Windows x86_64 / Python 3.12.7 / JAX CPU:
   This is a source check, not execution against their external datasets.
 
 See `requirements.windows-cpu.lock.txt` for the exact installed packages.
-Run `python check_environment.py` and `python tools/smoke_test.py` from the
-repository root for the provided environment and training checks.
+Run `python check_environment.py` from the repository root for the provided
+environment check. Reviewer training uses the complete `data/Heart.hdf5`.
 
 Not verified: Conda environment creation, Linux/GPU execution, a complete
 iterative-pruning training run, manuscript result equivalence, or figure/R

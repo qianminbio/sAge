@@ -20,9 +20,8 @@ git lfs pull
 
 Run the commands below from this repository directory. In Windows, use
 **Anaconda Prompt** for the Conda commands.
-Git LFS downloads the complete Heart example (approximately 285 MB). If you
-only need the small reviewer subset, a regular clone obtains that file even
-without LFS. See [the example-data guide](data/README.md).
+Git LFS downloads the Heart reviewer example (approximately 285 MB).
+See [the example-data guide](data/README.md).
 
 ## 2. Install the environment
 
@@ -68,21 +67,11 @@ to produce the manuscript results**. The original environment export is
 preserved in [docs/environment.original.yml](docs/environment.original.yml).
 
 Verified on Windows x86_64 with Python 3.12.7 and the CPU backend: clean pip
-installation, dependency checks, model execution, one-epoch synthetic
-training/evaluation, and a pruned-parameter checkpoint round trip. The exact
+installation, dependency checks, model execution, and a pruned-parameter
+checkpoint round trip. The exact
 resolved packages are recorded in
 [the Windows CPU snapshot](docs/requirements.windows-cpu.lock.txt).
 Conda environment creation and GPU execution have not been independently tested.
-
-To check the data-to-training workflow **without downloading biological data**:
-
-```bash
-python tools/smoke_test.py
-```
-
-This creates temporary synthetic data, prepares five folds, runs one epoch on
-fold 0, checks that final evaluation completes, and removes its temporary files.
-It does not validate manuscript results or the iterative pruning schedule.
 
 ### Optional: NVIDIA GPU on Linux
 
@@ -108,11 +97,9 @@ JAX cannot see a GPU, so CPU fallback is not mistaken for GPU execution.
 
 ## 3. Prepare your input data
 
-The repository provides `data/Heart.hdf5` via Git LFS and a smaller
-`data/Heart-reviewer-demo.h5` as a regular Git file. The small subset has
-120 biological cells (60 from each of the two present classes) and is intended
-for a quick reviewer execution check. For the full file's schema, checksum,
-and download instructions, read [data/README.md](data/README.md).
+The reviewer example is the complete `data/Heart.hdf5` (3,104 cells),
+provided via Git LFS. For its schema, checksum, and download instructions,
+read [data/README.md](data/README.md).
 Substitute another HDF5 path when using your own preprocessed dataset.
 
 Each HDF5 file must contain:
@@ -174,24 +161,16 @@ python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outpu
 This checks that the files exist and prints commands. It does not load the
 HDF5 contents or train the model.
 
-For a short reviewer run using biological rows, start with the included
-subset; this avoids a long run on the 3,104-cell full file:
-
-```bash
-python model/prepare_dataset_for_cv.py --data_path data/Heart-reviewer-demo.h5 --output_dir prepared_data/Heart-reviewer-demo
-python run_cross_validation.py --data-dir prepared_data/Heart-reviewer-demo --output-dir outputs/Heart-reviewer-demo --folds 0 -- --numhead 1 --batchsize 8 --batchrepeat 1 --max_epochs 1
-```
-
-Read `outputs/Heart-reviewer-demo/fold_0/train.log`. This command checks
-execution and uses reduced settings; its scores are not manuscript results.
-
 ### Run a short check on one fold
 
 ```bash
 python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outputs/Heart-check --folds 0 -- --max_epochs 1
 ```
 
-One epoch checks execution; it is not a full experiment or a pruning test.
+One epoch on the complete Heart file checks execution. Feature pruning can
+only start after validation improvement and later training epochs; a one-epoch
+run does not demonstrate pruning. See the full run below for the original
+training settings, and do not interpret a short run's scores as paper results.
 
 ### Run all five folds
 
@@ -244,7 +223,7 @@ outputs/Heart/fold_0/
   the existing training code initializes the accuracy threshold at 80%.
 
 The remaining folds have the same structure. Prepared splits and generated
-outputs are excluded from Git; the two Heart example files are included.
+outputs are excluded from Git; the complete Heart reviewer file is included.
 
 ## Troubleshooting
 

@@ -1,35 +1,27 @@
-# Heart example data for reviewer execution
+# Heart reviewer data
 
-The repository includes two HDF5 files:
+The reviewer example is the **complete** `Heart.hdf5` dataset. It contains
+3,104 cells with 22,919 float32 expression features. It is stored with
+Git LFS because the file is approximately 285 MB.
 
-| File | Cells | Use |
-| --- | ---: | --- |
-| `Heart.hdf5` | 3,104 | Complete example file; stored with Git LFS |
-| `Heart-reviewer-demo.h5` | 120 | Small, deterministic subset for a quick run |
+| HDF5 key | Shape | Meaning |
+| --- | --- | --- |
+| `data` | `(3104, 22919)` | Cell-by-feature expression matrix |
+| `label` | `(3104, 3)` | Class ID and two covariate columns |
 
-Both have 22,919 float32 features in `data` and three int8 columns in
-`label`. Class IDs are 1 (2,537 cells in the complete file) and 4
-(567 cells). The first covariate has ID 1 for all cells; the second has ID 6
-and is currently unused by the model. The model still has six output logits,
-of which only classes 1 and 4 occur in this file.
+Class IDs are 1 (2,537 cells) and 4 (567 cells); the model has six output
+logits, of which only classes 1 and 4 occur in this file. The first covariate
+has ID 1 for every cell. The second has ID 6 and is currently unused.
+Expression values are nonnegative and finite.
 
-These files have nonnegative, finite expression values. The file does not
-provide gene names, cell IDs, donor IDs, tissue labels, or a public source
-accession. The author must supply the provenance, label mappings, and
-redistribution rights before a final manuscript release.
+Gene names, cell IDs, donor IDs, tissue labels, and a public data accession
+are not stored in this HDF5. The author must document the source, feature
+order, class/covariate meanings, and redistribution rights before final
+manuscript release.
 
-The small file was made with 60 cells from each class, seed 20201212,
-without replacement, using `tools/make_reviewer_demo.py`. It retains the
-selected rows' original feature and label values. Its role is to check
-installation and execution; its scores do not reproduce the paper.
-The provided subset's SHA-256 is
-`f433fdbb624979cdcad47d83b7d39ea74dfcf64ce8c80eed5c04b0572cf0cb61`.
-The documented one-epoch command was run successfully on Windows CPU. That
-single run did not validate the full training or pruning schedule.
+## Download and verify
 
-## Download the complete example
-
-Install Git LFS, then clone and fetch LFS files:
+Install Git LFS before cloning:
 
 ```bash
 git lfs install
@@ -38,25 +30,46 @@ cd sAge
 git lfs pull
 ```
 
-Check that `data/Heart.hdf5` is approximately 285 MB. The expected SHA-256 is:
+The expected SHA-256 of `data/Heart.hdf5` is:
 
 ```text
 5a72f755adb1ed9eba62d85c7ab2d2f3502150be01d0892f4d7dd335b347e27f
 ```
 
-Without Git LFS, a clone may contain only a small pointer file in place of
-the complete HDF5. The small reviewer file is a regular Git file and does
-not require LFS.
+If the local file is only a few bytes, Git LFS was not installed or fetched;
+run `git lfs pull` from the repository. Allow several gigabytes of free disk
+space for the generated holdout, five-fold splits, logs, and checkpoints.
 
-## Quick reviewer run with biological rows
+## Run sAge on Heart
 
-From the repository root in the `sage` environment:
+Install the environment as described in the
+[main README](../README.md), then prepare the full dataset:
 
 ```bash
-python model/prepare_dataset_for_cv.py --data_path data/Heart-reviewer-demo.h5 --output_dir prepared_data/Heart-reviewer-demo
-python run_cross_validation.py --data-dir prepared_data/Heart-reviewer-demo --output-dir outputs/Heart-reviewer-demo --folds 0 -- --numhead 1 --batchsize 8 --batchrepeat 1 --max_epochs 1
+python model/prepare_dataset_for_cv.py --data_path data/Heart.hdf5 --output_dir prepared_data/Heart --initial_test_size_ratio 0.2 --n_cv_splits 5 --random_state 42
 ```
 
-Read `outputs/Heart-reviewer-demo/fold_0/train.log` after the runner finishes.
-For the complete file, substitute `data/Heart.hdf5` and choose fresh
-preparation/output directories. Full training is much longer than one epoch.
+Check the generated paths, then run the five folds:
+
+```bash
+python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outputs/Heart --dry-run
+python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outputs/Heart -- --seed 20201212 --max_epochs 9999
+```
+
+The runner writes each fold's `train.log` and feature masks/checkpoints
+under `outputs/Heart/fold_N/`. Use a fresh `--output-dir` for any repeat
+run. Full CPU training may take a long time; use the validated accelerator
+environment when reproducing the manuscript experiments.
+
+To check only whether one epoch can execute on the **same complete Heart
+file**, run fold 0 into a separate directory:
+
+```bash
+python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outputs/Heart-one-epoch --folds 0 -- --max_epochs 1
+```
+
+This execution check will not demonstrate feature pruning. In the current
+training code, pruning is considered after epoch 4 and requires a validation
+accuracy improvement above the initialized 80% threshold. A full run is
+necessary to observe whether and when features are removed. Results from
+one epoch are not the manuscript results.
