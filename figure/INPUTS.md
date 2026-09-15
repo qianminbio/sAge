@@ -110,12 +110,12 @@ Some listed paths are generated intermediates rather than primary datasets. Foll
 
 - `2-8.3-shanda/1-feature/1-human-guaidian-choose-gene/Gene_Lists`
 
-### `figure/figure5/figure-6-1-plasma.ipynb`
+### `figure/figure5/figure-5-1-plasma.ipynb`
 
 - `0-figure-code`
 - `2-8.3-shanda/1-feature/1-figure/0-result-6/VTN_stable_high_receptor_celltypes`
 
-### `figure/figure6/figure-5-0-clock.ipynb`
+### `figure/figure6/figure-6-0-clock.ipynb`
 
 - `1-TMS-remove/2-restart`
 - `2-8.3-shanda/1-data/2-valid/GSE137869_RAW`
@@ -123,18 +123,18 @@ Some listed paths are generated intermediates rather than primary datasets. Foll
 - `2-8.3-shanda/1-feature/mouse_rat_orthologs.csv`
 - `header.txt`
 
-### `figure/figure6/figure-5-1-leipameisu.ipynb`
+### `figure/figure6/figure-6-1-leipameisu.ipynb`
 
 - `2-8.3-shanda/1-data/2-valid/GSE210669_RAW`
 - `2-8.3-shanda/1-feature/10-2-0-Gene_Trajectory_Clusters_Annotated/{TARGET_TISSUE}_Cluster_Assignments.csv`
 - `2-8.3-shanda/1-feature/9-Master-raw-Master_Clocks_3/{TARGET_TISSUE}_Clock.pkl`
 
-### `figure/figure6/figure-5-2-CR.ipynb`
+### `figure/figure6/figure-6-2-CR.ipynb`
 
 - `2-8.3-shanda/1-data/2-valid/GSE137869_RAW`
 - `2-8.3-shanda/1-feature/9-Master-raw-Master_Clocks_3`
 
-### `figure/figure6/figure-5-3-target-gene.ipynb`
+### `figure/figure6/figure-6-3-target-gene.ipynb`
 
 - `2-8.3-shanda/1-feature/1-figure/0-4-result-5-CR-leipameisu/2-CR/mmc2.xlsx`
 - `2-8.3-shanda/1-feature/1-figure/0-4-result-5-CR-leipameisu/3-CR/table.xlsx`
@@ -145,7 +145,7 @@ Some listed paths are generated intermediates rather than primary datasets. Foll
 - Figure 2 MLP comparisons use selected-gene lists, train/test HDF5 files, competitor model results, and summary tables. The bundled Heart example alone does not supply these.
 - Figure 3/4 analyses use gene identifiers, tissue-level expression matrices, trajectory clusters, and enrichment results. Their biological labels and source repositories need documentation.
 - The intervention and clock analyses use external 10x inputs, precomputed clock `.pkl` models, cluster assignments, ortholog tables, and Excel sheets. Release or accession details and model provenance are pending.
-- `figure/figure5/figure-6-1-plasma.ipynb` reads cached CellPhoneDB CSVs from `0-figure-code/0-result-6-2-plasma-data-output/22_cellphonedb_tissue_pseudobulk/24_age_stratified_lt60_gt60/`, plus plasma VTN and receptor-expression tables. Its helper module is now included, but these result tables and the source data behind them are external.
+- `figure/figure5/figure-5-1-plasma.ipynb` reads cached CellPhoneDB CSVs from `0-figure-code/0-result-6-2-plasma-data-output/22_cellphonedb_tissue_pseudobulk/24_age_stratified_lt60_gt60/`, plus plasma VTN and receptor-expression tables. Its helper module is now included, but these result tables and the source data behind them are external.
 - `figure/cellphonedb_interaction_count_network.py` requires `22_cpdb_all_pvalues.csv`, `22_cpdb_all_means.csv`, `22_eight_ligand_all_cpdb_receptor_candidates.csv`, and `04b_tissue_secreted_gene_plasma_evidence.csv` under the listed input locations.
 
 For submission, connect each reported panel to an accessible dataset or source-data table, the exact input path, and the command or notebook cell sequence. Record restrictions and an access route for data that cannot be publicly redistributed.

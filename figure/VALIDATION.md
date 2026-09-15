@@ -1,5 +1,17 @@
 # Figure-code validation record
 
+## Notebook launch and renamed files
+
+After the Figure 5/6 file renames, documentation and notebook headings were
+updated to the published names. All 17 notebook initialization cells were
+executed in separate Python processes with each notebook's own directory as
+the working directory. The repository lookup and `figure.paths` imports
+succeeded in every case. Notebook-format and Python-syntax checks passed,
+and local Markdown file links were checked. This verifies initialization;
+it is not a rerun of the downstream scientific analyses.
+
+## Analysis execution
+
 On 2026-09-15, the optional `requirements-figures.txt` package set was
 installed in a fresh Python 3.12 virtual environment that already held the
 pinned model requirements. `python -m pip check` passed. All 17 organized
@@ -15,7 +27,7 @@ original small CellPhoneDB/source-evidence CSV files, completed its analysis,
 and saved result tables and PNG/PDF/SVG network figures. Only its paths and
 output-directory creation were changed from the author's source version.
 
-Every code cell in `figure/figure5/figure-6-1-plasma.ipynb` was then executed
+Every code cell in `figure/figure5/figure-5-1-plasma.ipynb` was then executed
 in order using the same local external/cached inputs and isolated output
 directory. It loaded 14 shared tissues, completed the age-stratified network,
 age-specific ligand–receptor comparison, liver/plasma VTN panels, and receiver

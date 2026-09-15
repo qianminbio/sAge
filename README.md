@@ -1,5 +1,11 @@
 # sAge
 
+**Quick navigation:** [Installation](#2-install-the-environment) ·
+[Heart example](data/README.md) · [Training](#4-train-the-model) ·
+[Figure workflow](figure/WORKFLOW.md) ·
+[Validation record](docs/reviewer-validation.md) ·
+[Release information](docs/release-information.md)
+
 **sAge** is a JAX/Flax model for classification and iterative feature selection
 from single-cell expression data. This repository provides data splitting,
 training, cross-validation, and feature-mask export.

@@ -28,7 +28,7 @@ On Windows x86_64 / Python 3.12.7 / JAX CPU:
   predictions agreed within `rtol=1e-5, atol=1e-5`.
 - Saved and restored those pruned parameters and the feature mask; predictions
   still agreed within the same tolerance.
-- Validated all 16 notebooks as notebook documents and parsed their Python cells.
+- Validated the original 16 notebooks as notebook documents and parsed their Python cells.
   This is a source check, not execution against their external datasets.
 
 See `requirements.windows-cpu.lock.txt` for the exact installed packages.
@@ -40,7 +40,11 @@ verified complete Heart download, independent Conda and pip installations,
 five-fold preparation, fold 0 training through natural early stopping, actual
 iterative pruning to one retained feature, and checkpoint restore. Not verified:
 a complete five-fold training run,
-Linux/GPU execution, manuscript result equivalence, or figure/R execution.
+Linux/GPU execution, or manuscript result equivalence.
+A subsequent [figure audit](../figure/VALIDATION.md) validated 17 organized
+notebooks and parsed four R scripts; it executed the complete plasma notebook
+and CellPhoneDB helper with local cached inputs. The other figure analyses
+have not been executed against their manuscript datasets.
 The optional figure requirements are not a validated version lock.
 
 ## Experimental behavior

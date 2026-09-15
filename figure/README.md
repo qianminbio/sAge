@@ -1,5 +1,8 @@
 # Manuscript figure code
 
+See [the step-by-step workflow](WORKFLOW.md) for analysis order, required
+upstream results, expected output types and the current execution scope.
+
 The notebooks and R scripts are organized by analysis group in `figure2/`
 through `figure6/`. `data- preprocess.ipynb` and `elbow-gene-choose.ipynb`
 contain upstream preparation and feature-count analysis. The directory labels
@@ -83,7 +86,7 @@ the original manuscript R/Bioconductor versions are not yet known.
 | `figure2/` | Mouse/human MLP benchmarks, heatmaps and boxplots |
 | `figure3/` | Gene-expression trajectories and GO clusters |
 | `figure4/` | Tissue gene ratios, gene-set overlap and GO analyses |
-| `figure5/figure-6-1-plasma.ipynb` | Plasma and age-stratified tissue communication panels |
+| `figure5/figure-5-1-plasma.ipynb` | Plasma and age-stratified tissue communication panels |
 | `figure6/` | Clocks, rapamycin, caloric restriction and target genes |
 | `cellphonedb_interaction_count_network.py` | CellPhoneDB network helper and analysis |
 
