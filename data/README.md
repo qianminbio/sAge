@@ -73,3 +73,6 @@ training code, pruning is considered after epoch 4 and requires a validation
 accuracy improvement above the initialized 80% threshold. A full run is
 necessary to observe whether and when features are removed. Results from
 one epoch are not the manuscript results.
+
+For a longer fold 0 execution check on the same full file, follow the
+eight-epoch pruning-check command in the [main README](../README.md).

@@ -9,7 +9,7 @@ train/test and cross-validation splits → train → inspect logs and selected f
 
 ## 1. Download the code
 
-Install Git and Miniconda (or Anaconda), then run:
+Install Git and Git LFS, then run:
 
 ```bash
 git lfs install
@@ -25,32 +25,55 @@ See [the example-data guide](data/README.md).
 
 ## 2. Install the environment
 
-### Option A: Conda (CPU, simplest starting point)
+### Option A: Conda (CPU)
 
 ```bash
 conda env create -f environment.yml
 conda activate sage
-python -m pip check
-python check_environment.py
+python -s -m pip check
+python -s check_environment.py
 ```
 
 The environment file creates a separate Python 3.12 environment and installs
-the pinned dependencies in `requirements.txt`. It does not modify your base
-environment. CPU execution is sufficient for the installation check; full
-experiments may take substantially longer on CPU.
+the pinned dependencies in `requirements.txt` using the official conda-forge
+channel URL. The `-s` flag keeps packages installed in the system's Python
+user directory out of the Conda environment. Use `python -s` in place of
+`python` in the data-preparation and training commands below when using Conda.
+CPU execution is sufficient for the installation check; full experiments may
+take substantially longer on CPU.
 
-### Option B: Install with pip in a fresh environment
+### Option B: Python virtual environment (CPU; no Conda required)
+
+Install Python 3.12, then create a fresh environment from the repository root:
 
 ```bash
-conda create -n sage python=3.12 pip -y
-conda activate sage
+python -m venv .venv
+```
+
+Activate it on Windows (Command Prompt or Anaconda Prompt):
+
+```bat
+.venv\Scripts\activate.bat
+```
+
+Or activate it on Linux/macOS:
+
+```bash
+source .venv/bin/activate
+```
+
+Then run:
+
+```bash
+python --version
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 python -m pip check
 python check_environment.py
 ```
 
-Use **either Option A or Option B**. The core versions are:
+`python --version` must show Python 3.12. Use **either Option A or Option B**.
+The core versions are:
 
 | Component | Version |
 | --- | --- |
@@ -66,12 +89,14 @@ These are installation-guide versions, **not a claim about the software used
 to produce the manuscript results**. The original environment export is
 preserved in [docs/environment.original.yml](docs/environment.original.yml).
 
-Verified on Windows x86_64 with Python 3.12.7 and the CPU backend: clean pip
-installation, dependency checks, model execution, and a pruned-parameter
-checkpoint round trip. The exact
-resolved packages are recorded in
-[the Windows CPU snapshot](docs/requirements.windows-cpu.lock.txt).
-Conda environment creation and GPU execution have not been independently tested.
+Verified from a fresh public GitHub clone on Windows x86_64 / JAX CPU: Git LFS
+Heart download and checksum, independent Conda and virtual-environment installs,
+five-fold data preparation, one-fold training with final test evaluation, and
+an eight-epoch run that actually pruned features and saved a restorable checkpoint.
+See [the reviewer run record](docs/reviewer-validation.md) for exact scope and
+results. An earlier Windows CPU package snapshot is available at
+[docs/requirements.windows-cpu.lock.txt](docs/requirements.windows-cpu.lock.txt).
+GPU execution has not been independently tested.
 
 ### Optional: NVIDIA GPU on Linux
 
@@ -172,6 +197,17 @@ only start after validation improvement and later training epochs; a one-epoch
 run does not demonstrate pruning. See the full run below for the original
 training settings, and do not interpret a short run's scores as paper results.
 
+To exercise the pruning branch without starting all five folds, use a new
+output directory for a longer fold 0 run:
+
+```bash
+python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outputs/Heart-pruning-check --folds 0 -- --max_epochs 8
+```
+
+Pruning depends on validation improvements, so the exact epoch and retained
+feature count can vary. The [reviewer run record](docs/reviewer-validation.md)
+shows an observed run and how its checkpoint was checked.
+
 ### Run all five folds
 
 ```bash
@@ -229,7 +265,9 @@ outputs are excluded from Git; the complete Heart reviewer file is included.
 
 | Problem | What to check |
 | --- | --- |
-| `ModuleNotFoundError` | Activate `sage`; install with `python -m pip install -r requirements.txt`. |
+| `ModuleNotFoundError` | Activate the selected environment; install with `python -m pip install -r requirements.txt`. |
+| Conda mirror returns HTTP 404 | Use the official channel URL in `environment.yml` and retry; Option B avoids Conda channels. |
+| `pip check` lists unrelated user packages | In Conda, use `python -s -m pip check` and `python -s` for later commands. |
 | Dependency/version error | Create a fresh environment using the pinned requirements; avoid mixing with the historical export. |
 | JAX lists only a CPU | Check the operating system, NVIDIA driver, and CUDA backend; run `check_environment.py --require-gpu`. |
 | Feature-count assertion | The input must have 22,919 features in the expected order. |
@@ -258,6 +296,7 @@ figure dependencies.
 | `environment.yml`, `requirements.txt` | Installation environment |
 | `docs/environment.original.yml` | Historical environment export |
 | `docs/reproducibility.md` | Validation scope and experimental caveats |
+| `docs/reviewer-validation.md` | Fresh-clone reviewer run record |
 
 ## Reproducibility and citation
 

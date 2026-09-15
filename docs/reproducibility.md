@@ -35,9 +35,12 @@ See `requirements.windows-cpu.lock.txt` for the exact installed packages.
 Run `python check_environment.py` from the repository root for the provided
 environment check. Reviewer training uses the complete `data/Heart.hdf5`.
 
-Not verified: Conda environment creation, Linux/GPU execution, a complete
-iterative-pruning training run, manuscript result equivalence, or figure/R
-execution. The optional figure requirements are not a validated version lock.
+A separate [fresh-clone reviewer run](reviewer-validation.md) subsequently
+verified complete Heart download, independent Conda and pip installations,
+five-fold preparation, fold 0 training, actual iterative pruning, and checkpoint
+restore. Not verified: a complete five-fold/early-stopped training run,
+Linux/GPU execution, manuscript result equivalence, or figure/R execution.
+The optional figure requirements are not a validated version lock.
 
 ## Experimental behavior
 
