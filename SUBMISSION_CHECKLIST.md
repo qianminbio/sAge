@@ -33,14 +33,14 @@
 ## GitHub handoff
 
 - [x] Confirm that the submission does not require anonymity.
-- [x] Specify the public GitHub repository: https://github.com/qm713152/sAge.
+- [x] Specify the public GitHub repository: https://github.com/qianminbio/sAge.
 - [ ] Select a license with the code owners and review third-party attribution.
 - [x] Provide a portable environment.yml; retain the original export in docs/environment.original.yml.
 - [x] Review published files; generated outputs are ignored and Heart is explicitly tracked by Git LFS.
 - [ ] Complete the README release metadata and remove resolved preparation notes.
 - [ ] Tag the exact version used for submission and include that link in the manuscript.
 
-Repository: https://github.com/qm713152/sAge. Manuscript release readiness
+Repository: https://github.com/qianminbio/sAge. Manuscript release readiness
 depends on the unchecked scientific and reproduction items above.
 
 See [author-supplied release information](docs/release-information.md) for the remaining metadata and scientific decisions.

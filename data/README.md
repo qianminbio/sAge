@@ -28,7 +28,7 @@ Install Git LFS before cloning:
 
 ```bash
 git lfs install
-git clone https://github.com/qm713152/sAge.git
+git clone https://github.com/qianminbio/sAge.git
 cd sAge
 git lfs pull
 ```

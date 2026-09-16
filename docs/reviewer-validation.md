@@ -1,8 +1,12 @@
 # Reviewer run record
 
-This record tests whether the public `qm713152/sAge` repository can execute
+This record tests whether the public `qianminbio/sAge` repository can execute
 the model from its README on the complete Heart example. It is an execution
 check, not a reproduction of every manuscript result.
+
+The execution audit was conducted before the owner renamed their GitHub
+account. The current repository has the same code history and Heart example;
+the namespace change itself did not alter the model or dataset.
 
 ## Fresh clone and environment
 
