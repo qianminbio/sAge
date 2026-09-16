@@ -1,6 +1,7 @@
 # sAge
 
-**Quick navigation:** [Installation](#2-install-the-environment) ·
+**Quick navigation:** [Reviewer quick run](#reviewer-quick-run) ·
+[Installation](#2-install-the-environment) ·
 [Heart example](data/README.md) · [Training](#4-train-the-model) ·
 [Figure workflow](figure/WORKFLOW.md) ·
 [Validation record](docs/reviewer-validation.md) ·
@@ -12,6 +13,39 @@ training, cross-validation, and feature-mask export.
 
 **Workflow:** install the environment → prepare an HDF5 dataset → create the
 train/test and cross-validation splits → train → inspect logs and selected features.
+
+## Reviewer quick run
+
+This is the shortest route to check that the published **model** runs on the
+complete Heart example. It checks execution and final holdout evaluation;
+one epoch is too short to demonstrate feature pruning or reproduce paper scores.
+
+1. [Clone the repository and download Heart with Git LFS](#1-download-the-code).
+2. [Install the pinned Python 3.12 environment](#2-install-the-environment)
+   and run `check_environment.py` as shown there.
+3. From the `sAge` repository directory, run:
+
+```bash
+python model/prepare_dataset_for_cv.py --data_path data/Heart.hdf5 --output_dir prepared_data/Heart --initial_test_size_ratio 0.2 --n_cv_splits 5 --random_state 42
+python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outputs/Heart-quick-check --folds 0 --dry-run
+python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outputs/Heart-quick-check --folds 0 -- --max_epochs 1
+```
+
+If using the Conda option on a machine with user-installed Python packages,
+replace `python` with `python -s` in these three commands as described in the
+installation section. Leave several gigabytes free for the generated splits
+and outputs; the Heart file itself is about 285 MB.
+
+The data-preparation command should report **3,104 cells**, a **2,484/620**
+initial train/test split, and **five CV folds**. The dry run prints the resolved
+training command and checks file locations. The training runner writes its
+output to `outputs/Heart-quick-check/fold_0/train.log`, including the final
+holdout evaluation; the terminal can stay quiet while it runs. Use a **new**
+output directory for each repeat. For pruning and complete experimental
+settings, continue with [the training section](#4-train-the-model). The
+[execution record](docs/reviewer-validation.md) states exactly what has been
+validated. Figure notebooks require separate inputs described in
+[the figure workflow](figure/WORKFLOW.md).
 
 ## 1. Download the code
 

@@ -61,8 +61,9 @@ python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outpu
 
 The runner writes each fold's `train.log` and feature masks/checkpoints
 under `outputs/Heart/fold_N/`. Use a fresh `--output-dir` for any repeat
-run. Full CPU training may take a long time; use the validated accelerator
-environment when reproducing the manuscript experiments.
+run. Full CPU training may take a long time. An optional Linux GPU setup is
+described in the main README, but GPU execution has not been independently
+validated for this repository release.
 
 To check only whether one epoch can execute on the **same complete Heart
 file**, run fold 0 into a separate directory:

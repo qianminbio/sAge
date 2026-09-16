@@ -1,5 +1,28 @@
 # Reviewer run record
 
+## Fresh check after the public URL changed
+
+On 2026-09-16, commit `7b0523a` was cloned from
+`https://github.com/qianminbio/sAge.git` into a new checkout. Git LFS fetched
+the complete `data/Heart.hdf5` from that repository: 284,573,664 bytes, with
+the SHA-256 stated in `data/README.md`. An isolated Python 3.12 environment
+previously installed from this repository's pinned model requirements passed
+`pip check` and `check_environment.py` on JAX CPU. This check reused the
+environment; it did not reinstall packages from scratch after the URL change.
+
+The README data-preparation command produced 2,484 initial training cells,
+620 held-out test cells and five CV folds. The documented dry run found the
+prepared fold files. Fold 0 then completed one epoch and final holdout
+evaluation, saving `command.json` and `train.log` (final diagnostic loss
+1.6728; accuracy 31.33%). The quick-run variant of `--dry-run --folds 0`
+also succeeded. These metrics demonstrate execution only; they are not
+manuscript results. The model code and Heart example were unchanged by the
+repository-owner rename, and the longer pruning run below remains the
+evidence for iterative pruning. This check did not rerun five full folds,
+GPU/Linux execution or the figures.
+
+## Earlier full-fold-zero execution audit
+
 This record tests whether the public `qianminbio/sAge` repository can execute
 the model from its README on the complete Heart example. It is an execution
 check, not a reproduction of every manuscript result.

@@ -5,7 +5,7 @@
 The root `environment.yml` and pinned `requirements.txt` define the runtime
 used for the new installation guide. They are not the original manuscript
 environment. The historical export is preserved verbatim in
-`environment.original.yml`; it contains Linux build identifiers, a local
+`docs/environment.original.yml`; it contains Linux build identifiers, a local
 prefix, and multiple CUDA package generations. Do not use that export as a
 portable installation command.
 
@@ -31,7 +31,7 @@ On Windows x86_64 / Python 3.12.7 / JAX CPU:
 - Validated the original 16 notebooks as notebook documents and parsed their Python cells.
   This is a source check, not execution against their external datasets.
 
-See `requirements.windows-cpu.lock.txt` for the exact installed packages.
+See `docs/requirements.windows-cpu.lock.txt` for the exact installed packages.
 Run `python check_environment.py` from the repository root for the provided
 environment check. Reviewer training uses the complete `data/Heart.hdf5`.
 
