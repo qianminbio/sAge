@@ -88,11 +88,11 @@ the original manuscript R/Bioconductor versions are not yet known.
 | `figure4/` | Tissue gene ratios, gene-set overlap and GO analyses |
 | `figure5/figure-5-1-plasma.ipynb` | Plasma and age-stratified tissue communication panels |
 | `figure6/` | Clocks, rapamycin, caloric restriction and target genes |
-| `cellphonedb_interaction_count_network.py` | CellPhoneDB network helper and analysis |
+| `figure5/cellphonedb_interaction_count_network.py` | CellPhoneDB network helper and analysis |
 
 The CellPhoneDB helper module was recovered from the author's analysis
 directory and now ships with the notebooks. Run it from the repository root
-with `python -m figure.cellphonedb_interaction_count_network` **only after**
+with `python -m figure.figure5.cellphonedb_interaction_count_network` **only after**
 supplying its input CSV files described in [INPUTS.md](INPUTS.md). The plasma
 notebook also requires cached age-stratified tables; it does not rerun
 CellPhoneDB.

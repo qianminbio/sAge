@@ -20,12 +20,15 @@ cells parsed successfully. All four R analysis scripts passed `parse()` with
 R 4.3.3. This is a source and installation check, not figure reproduction.
 
 The original `cellphonedb_interaction_count_network.py` helper was recovered
-from the author's local analysis directory and included in `figure/`. With
+from the author's local analysis directory and included in `figure/figure5/`. With
 `SAGE_FIGURE_INPUT_ROOT=E:/` and an ignored audit directory as the output
-root, `python -m figure.cellphonedb_interaction_count_network` read the four
+root, `python -m figure.figure5.cellphonedb_interaction_count_network` read the four
 original small CellPhoneDB/source-evidence CSV files, completed its analysis,
-and saved result tables and PNG/PDF/SVG network figures. Only its paths and
-output-directory creation were changed from the author's source version.
+and saved result tables and PNG/PDF/SVG network figures. After moving the
+module into Figure 5, the same command was rerun with local input CSVs and
+completed successfully (26 routes, 14 edges and 3 ligand–receptor pairs).
+Only its paths, output-directory creation and package-relative import were
+changed from the author's source version.
 
 Every code cell in `figure/figure5/figure-5-1-plasma.ipynb` was then executed
 in order using the same local external/cached inputs and isolated output

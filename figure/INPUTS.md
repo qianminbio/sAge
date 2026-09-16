@@ -12,7 +12,7 @@ Run Jupyter from the repository root so `from figure.paths import ...` works. Ru
 
 Some listed paths are generated intermediates rather than primary datasets. Follow the code cell order and supply any upstream results before rerunning a downstream figure.
 
-### `figure/cellphonedb_interaction_count_network.py`
+### `figure/figure5/cellphonedb_interaction_count_network.py`
 
 - `0-figure-code/0-result-6-2-plasma-data-output`
 
@@ -146,6 +146,6 @@ Some listed paths are generated intermediates rather than primary datasets. Foll
 - Figure 3/4 analyses use gene identifiers, tissue-level expression matrices, trajectory clusters, and enrichment results. Their biological labels and source repositories need documentation.
 - The intervention and clock analyses use external 10x inputs, precomputed clock `.pkl` models, cluster assignments, ortholog tables, and Excel sheets. Release or accession details and model provenance are pending.
 - `figure/figure5/figure-5-1-plasma.ipynb` reads cached CellPhoneDB CSVs from `0-figure-code/0-result-6-2-plasma-data-output/22_cellphonedb_tissue_pseudobulk/24_age_stratified_lt60_gt60/`, plus plasma VTN and receptor-expression tables. Its helper module is now included, but these result tables and the source data behind them are external.
-- `figure/cellphonedb_interaction_count_network.py` requires `22_cpdb_all_pvalues.csv`, `22_cpdb_all_means.csv`, `22_eight_ligand_all_cpdb_receptor_candidates.csv`, and `04b_tissue_secreted_gene_plasma_evidence.csv` under the listed input locations.
+- `figure/figure5/cellphonedb_interaction_count_network.py` requires `22_cpdb_all_pvalues.csv`, `22_cpdb_all_means.csv`, `22_eight_ligand_all_cpdb_receptor_candidates.csv`, and `04b_tissue_secreted_gene_plasma_evidence.csv` under the listed input locations.
 
 For submission, connect each reported panel to an accessible dataset or source-data table, the exact input path, and the command or notebook cell sequence. Record restrictions and an access route for data that cannot be publicly redistributed.

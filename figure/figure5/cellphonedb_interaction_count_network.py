@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from .paths import input_path, output_path
+from ..paths import input_path, output_path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt

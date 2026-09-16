@@ -37,8 +37,8 @@ letters must be matched to the submitted manuscript by the authors.
 | [Figure 5](figure5/figure-5-1-plasma.ipynb) | Plasma notebook | Cached CellPhoneDB, plasma VTN and receptor tables | Tissue networks, ligand–receptor and VTN panels |
 | [Figure 6](figure6/) | Clock notebook, then intervention notebooks | Training data, saved clocks, intervention matrices, cluster assignments and ortholog mapping | Intervention scores/plots; target-gene analysis additionally needs external Excel tables |
 
-The [CellPhoneDB helper](cellphonedb_interaction_count_network.py) can also run
-as `python -m figure.cellphonedb_interaction_count_network` from the repository
+The [CellPhoneDB helper](figure5/cellphonedb_interaction_count_network.py) can also run
+as `python -m figure.figure5.cellphonedb_interaction_count_network` from the repository
 root once its four input CSVs are present. It reads cached CellPhoneDB results;
 it does not run CellPhoneDB itself.
 
