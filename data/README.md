@@ -1,9 +1,9 @@
-# Heart reviewer data
+# Heart example data
 
 See [the data dictionary and release information](../docs/release-information.md)
 for verified label counts and the biological definitions still to be supplied.
 
-The reviewer example is the **complete** `Heart.hdf5` dataset. It contains
+The example is the **complete** `Heart.hdf5` dataset. It contains
 3,104 cells with 22,919 float32 expression features. It is stored with
 Git LFS because the file is approximately 285 MB.
 

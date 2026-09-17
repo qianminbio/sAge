@@ -1,4 +1,25 @@
-# Reviewer run record
+# Execution validation record
+
+## Quick run check on 2026-09-17
+
+A fresh checkout of `qianminbio/sAge` at `2d69f63`, with the local Quick run
+documentation and runner changes, downloaded the complete Heart file with
+Git LFS. Its SHA-256 matched the value below. This check reused the existing
+pinned Python 3.12.14 Conda environment on Windows / JAX CPU; it did not
+perform a fresh dependency installation. Both `python -s -m pip check` and
+`python -s check_environment.py` passed.
+
+The README preparation command produced 3,104 cells, the 2,484/620 initial
+split, and five CV folds. The fold 0 dry run passed. One epoch with the
+default training settings then exited successfully and completed holdout
+evaluation (`#Final Test: Loss = 1.6727, Acc = 31.33%`). These are execution
+diagnostics, not manuscript results. The runner preserved `-s` in the child
+command, used unbuffered logging, and printed the log path and completion
+message. A mocked subprocess check also verified argument forwarding,
+command recording, and error propagation via `check=True`.
+
+This check did not repeat pruning, all-five-fold training, GPU execution,
+or figure generation. The earlier records below retain their original scope.
 
 ## Fresh check after the public URL changed
 

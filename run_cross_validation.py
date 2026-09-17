@@ -42,7 +42,9 @@ def main():
         destination = output_dir / f'fold_{fold}'
         if not args.dry_run and destination.exists() and any(destination.iterdir()):
             parser.error(f'Output directory is not empty: {destination}')
-        command = [sys.executable, str(script),
+        # Preserve the documented python -s isolation in the training process.
+        python_flags = ['-s'] if sys.flags.no_user_site else []
+        command = [sys.executable, *python_flags, '-u', str(script),
                    '--cv_train_h5_path', str(paths[0]),
                    '--cv_valid_h5_path', str(paths[1]),
                    '--final_test_h5_path', str(paths[2]),
@@ -59,8 +61,10 @@ def main():
         (destination / 'command.json').write_text(
             json.dumps(command, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         with (destination / 'train.log').open('w', encoding='utf-8') as log:
+            print(f'Training started. Follow progress in {log.name}', flush=True)
             subprocess.run(command, stdout=log, stderr=subprocess.STDOUT,
                            env=env, check=True)
+        print(f'Training completed. Results: {destination / "train.log"}', flush=True)
 
 
 if __name__ == '__main__':

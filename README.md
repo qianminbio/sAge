@@ -1,6 +1,6 @@
 # sAge
 
-**Quick navigation:** [Reviewer quick run](#reviewer-quick-run) ·
+**Quick navigation:** [Quick run](#quick-run) ·
 [Installation](#2-install-the-environment) ·
 [Heart example](data/README.md) · [Training](#4-train-the-model) ·
 [Figure workflow](figure/WORKFLOW.md) ·
@@ -14,7 +14,7 @@ training, cross-validation, and feature-mask export.
 **Workflow:** install the environment → prepare an HDF5 dataset → create the
 train/test and cross-validation splits → train → inspect logs and selected features.
 
-## Reviewer quick run
+## Quick run
 
 This is the shortest route to check that the published **model** runs on the
 complete Heart example. It checks execution and final holdout evaluation;
@@ -40,7 +40,9 @@ The data-preparation command should report **3,104 cells**, a **2,484/620**
 initial train/test split, and **five CV folds**. The dry run prints the resolved
 training command and checks file locations. The training runner writes its
 output to `outputs/Heart-quick-check/fold_0/train.log`, including the final
-holdout evaluation; the terminal can stay quiet while it runs. Use a **new**
+holdout evaluation. The runner prints the log location at startup and a
+completion message when training finishes. A successful run exits without an
+error and its log contains `#Final Test: Loss = ..., Acc = ...`. Use a **new**
 output directory for each repeat. For pruning and complete experimental
 settings, continue with [the training section](#4-train-the-model). The
 [execution record](docs/reviewer-validation.md) states exactly what has been
@@ -60,7 +62,7 @@ git lfs pull
 
 Run the commands below from this repository directory. In Windows, use
 **Anaconda Prompt** for the Conda commands.
-Git LFS downloads the Heart reviewer example (approximately 285 MB).
+Git LFS downloads the Heart example (approximately 285 MB).
 See [the example-data guide](data/README.md).
 
 ## 2. Install the environment
@@ -133,7 +135,7 @@ Verified from a fresh public GitHub clone on Windows x86_64 / JAX CPU: Git LFS
 Heart download and checksum, independent Conda and virtual-environment installs,
 five-fold data preparation, one-fold training with final test evaluation, and
 an eight-epoch run that actually pruned features and saved a restorable checkpoint.
-See [the reviewer run record](docs/reviewer-validation.md) for exact scope and
+See [the execution validation record](docs/reviewer-validation.md) for exact scope and
 results. An earlier Windows CPU package snapshot is available at
 [docs/requirements.windows-cpu.lock.txt](docs/requirements.windows-cpu.lock.txt).
 GPU execution has not been independently tested.
@@ -162,7 +164,7 @@ JAX cannot see a GPU, so CPU fallback is not mistaken for GPU execution.
 
 ## 3. Prepare your input data
 
-The reviewer example is the complete `data/Heart.hdf5` (3,104 cells),
+The example is the complete `data/Heart.hdf5` (3,104 cells),
 provided via Git LFS. For its schema, checksum, and download instructions,
 read [data/README.md](data/README.md).
 Substitute another HDF5 path when using your own preprocessed dataset.
@@ -245,7 +247,7 @@ python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outpu
 ```
 
 Pruning depends on validation improvements, so the exact epoch and retained
-feature count can vary. The [reviewer run record](docs/reviewer-validation.md)
+feature count can vary. The [execution validation record](docs/reviewer-validation.md)
 shows both this short check and a complete fold 0 run that reached single-digit
 features. Use the full run below to observe the training stop condition.
 
@@ -256,7 +258,7 @@ python run_cross_validation.py --data-dir prepared_data/Heart --output-dir outpu
 ```
 
 Folds run sequentially. Training output is written to each fold's
-`train.log`, so the terminal may remain quiet while a fold is running.
+`train.log` with unbuffered output so you can follow progress while it runs.
 The runner stops on an error and rejects nonempty fold output directories;
 choose a new output directory when rerunning an experiment.
 
@@ -300,7 +302,7 @@ outputs/Heart/fold_0/
   the existing training code initializes the accuracy threshold at 80%.
 
 The remaining folds have the same structure. Prepared splits and generated
-outputs are excluded from Git; the complete Heart reviewer file is included.
+outputs are excluded from Git; the complete Heart example file is included.
 
 ## Troubleshooting
 
@@ -338,7 +340,7 @@ figure dependencies.
 | `environment.yml`, `requirements.txt` | Installation environment |
 | `docs/environment.original.yml` | Historical environment export |
 | `docs/reproducibility.md` | Validation scope and experimental caveats |
-| `docs/reviewer-validation.md` | Fresh-clone reviewer run record |
+| `docs/reviewer-validation.md` | Fresh-clone execution validation record |
 
 ## Reproducibility and citation
 
